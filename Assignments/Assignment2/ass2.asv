@@ -1,0 +1,21 @@
+clc,clear
+rng(1)
+
+syms x real
+
+N = 100;
+anoll = -2.923;
+bnoll = 7.18; 
+
+ilin = linspace(1,N,N)
+xlin = unifrnd(0,50,[N, 1])
+elin = normrnd(0,3.8, [N,1])
+
+ylin = anoll + bnoll*xlin+elin
+
+scatter(xlin,ylin)
+
+bigphi = [ones([]); xlin']
+
+theta = [a; b]
+thetahat = inv(phi'*phi)
