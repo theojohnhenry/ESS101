@@ -1,0 +1,40 @@
+clc,clf,clear
+%% butcher tableus
+rk1_a = zeros(1)
+rk1_b = [1]
+rk1_c = [0]
+
+rk2_a = zeros(2), rk2_a(2,1) = 1/2
+rk2_b = [0 1]
+rk2_c = [0; 1/2]
+
+rk4_a = zeros(4), rk4_a(2,1) = 1/2, rk4_a(3,2) = 1/2, rk4_a(4,3) = 1,
+rk4_b = [1/6 1/3 1/3 1/6]
+rk4_c = [0;1/2;1/2;1]
+
+%%
+syms x t
+
+lambda = -2;
+tf = 2;
+dt = 10^-1;
+x0 = 1
+
+f=lambda*x; %xdot, system dynamics
+mf_f = matlabFunction(f);
+
+N = round(tf/dt); %antal steg
+
+
+xlin = 0:dt:tf-dt
+scatter(xlin,mf_f(xlin))
+hold on 
+
+x_rk = [x0];
+xnext = rk_step(mf_f, x0 ,dt,rk1_a, rk1_b, rk1_c);
+
+%for k=1:N-1
+%    xnext = rk_step(mf_f, x_rk,dt,rk1_a, rk1_b, rk1_c);
+%    x_rk = [x_rk, xnext];
+%end
+%scatter(xlin, x_rk)
