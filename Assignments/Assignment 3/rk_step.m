@@ -3,20 +3,22 @@ function x_next = rk_step(f,x,dt,a,b,c)
     %nuvarnade state
     %timestep
     %a b c konstanter i butcher
-    K = []
+
     s = length(b);
+    K = zeros(1,s);
+    K(1) = f(x);
+
     %make k vector
-    for i=1:1:s
+    for i=2:s
         sum = 0;
-        for j=1:1:s
+        for j=1:s
             sum = sum + a(i,j)*K(j);
         end
-        Ki = f(x+dt*sum);
-        K = [K, Ki];
+        K(i) = f(x + dt * sum);
     end
 
     jonny=0;
-    for i=1:1:s
+    for i=1:s
         jonny=jonny+b(i)*K(i);
     end
 
